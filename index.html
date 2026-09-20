@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valento Aura | Luxury E-Commerce</title>
+  <style>
+    :root {
+      --bg-dark: #090a0f;
+      --bg-card: #12141d;
+      --bg-card-hover: #1a1d2b;
+      --accent-purple: #7c5dfa;
+      --accent-blue: #2563eb;
+      --accent-glow: rgba(124, 93, 250, 0.25);
+      --border-color: #222638;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --status-pending: #f59e0b;
+      --status-shipped: #3b82f6;
+      --status-delivered: #10b981;
+      --danger-color: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .role-bar {
+      background: #050608;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 10px 20px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .role-badge {
+      background: rgba(124, 93, 250, 0.2);
+      color: var(--accent-purple);
+      border: 1px solid var(--accent-purple);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: rgba(9, 10, 15, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 18px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    nav a, nav button {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 6px 10px;
+    }
+
+    nav a:hover, nav button:hover {
+      color: var(--text-primary);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .hero-banner {
+      background: radial-gradient(circle at top center, rgba(124, 93, 250, 0.15) 0%, rgba(9, 10, 15, 0) 70%);
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 40px 20px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero-banner h1 {
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-banner p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 25px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .category-card {
+      background: var(--bg-card);
+      padding: 16px 10px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+    }
+
+    .category-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-card:hover {
+      border-color: rgba(124, 93, 250, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .admin-card-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .btn-admin-action {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-edit { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid #2563eb; }
+    .btn-edit:hover { background: #2563eb; color: white; }
+
+    .btn-trash { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; }
+    .btn-trash:hover { background: #ef4444; color: white; }
+
+    .btn-restore { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+    .btn-restore:hover { background: #10b981; color: white; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-row { display: flex; gap: 15px; }
+    .form-row .form-group { flex: 1; }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #090a0f;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-wrapper input {
+      padding-right: 42px;
+    }
+
+    .toggle-password-btn {
+      position: absolute;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 4px;
+    }
+
+    .password-hint {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      background: #090a0f;
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .btn-csv {
+      background: #1e1b4b;
+      border: 1px solid var(--accent-purple);
+      color: #c7d2fe;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 15px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .data-table th, .data-table td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+    }
+
+    .data-table th {
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-status {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .badge-pending { background: rgba(245, 158, 11, 0.15); color: var(--status-pending); border: 1px solid var(--status-pending); }
+    .badge-shipped { background: rgba(59, 130, 246, 0.15); color: var(--status-shipped); border: 1px solid var(--status-shipped); }
+    .badge-delivered { background: rgba(16, 185, 129, 0.15); color: var(--status-delivered); border: 1px solid var(--status-delivered); }
+
+    .permission-checkboxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      background: #090a0f;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .permission-checkboxes label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: none;
+      color: var(--text-primary);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .hidden { display: none !important; }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(4, 5, 8, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 25px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
+    }
+
+    .auth-header { text-align: center; margin-bottom: 20px; }
+
+    .auth-header h2 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .role-selector {
+      display: flex;
+      background: #090a0f;
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .role-option {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .role-option.active {
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+      color: white;
+    }
+
+    /* RESPONSIVE MEDIA QUERIES FOR MOBILE DEVICES */
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #090a0f;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a, nav button {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #1a1d2b;
+        width: 100%;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .hero-banner h1 {
+        font-size: 26px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+
+      .product-card img {
+        height: 140px;
+      }
+
+      .admin-card-actions {
+        flex-direction: column;
+      }
+
+      .admin-controls-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+      }
+
+      .admin-controls-header .admin-only-csv {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .btn-csv {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Role Bar -->
+  <div class="role-bar">
+    <div>Access Tier: <span class="role-badge" id="currentRoleText">Buyer</span></div>
+    <div id="authButtons">
+      <button onclick="openAuthModal('login')" style="background:var(--accent-purple); color:white; padding:5px 14px; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Sign In</button>
+    </div>
+  </div>
+
+  <header>
+    <a href="#" class="logo">Valento Aura</a>
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    <nav id="mainNav">
+      <a href="#" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('shop')">Shop</a>
+      <a href="#" onclick="showSection('orders')">📦 Orders (<span id="ordersCountNav">0</span>)</a>
+      <a href="#" onclick="showSection('payments')" id="paymentsNavLink" class="hidden">💳 Payments</a>
+      <a href="#" onclick="showSection('messages')" id="messagesNavLink" class="hidden">✉️ Inquiries</a>
+      <a href="#" onclick="showSection('adminMgmt')" id="adminMgmtNavLink" class="hidden">👑 Admin Control</a>
+      <a href="#" onclick="showSection('contact')" id="contactNavLink">Contact Us</a>
+      <button onclick="showSection('cart')" id="cartNavLink">🛒 Cart (<span id="cartCount">0</span>)</button>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- HOME SECTION -->
+    <section id="homeSection">
+      <div class="hero-banner">
+        <h1>VALENTO AURA</h1>
+        <p>Curated Luxury Fashion & Modern Enterprise Catalog</p>
+      </div>
+
+      <h2 style="font-size: 18px; margin-bottom: 16px;">Browse Categories</h2>
+      <div class="category-grid">
+        <div class="category-card" onclick="filterCategory('Mens')"><h3 style="margin:0; font-size:13px;">Men's</h3></div>
+        <div class="category-card" onclick="filterCategory('Womens')"><h3 style="margin:0; font-size:13px;">Women's</h3></div>
+        <div class="category-card" onclick="filterCategory('Kids')"><h3 style="margin:0; font-size:13px;">Kids'</h3></div>
+        <div class="category-card" onclick="filterCategory('Footwear')"><h3 style="margin:0; font-size:13px;">Footwear</h3></div>
+        <div class="category-card" onclick="filterCategory('Accessories')"><h3 style="margin:0; font-size:13px;">Accessories</h3></div>
+        <div class="category-card" onclick="filterCategory('Watches')"><h3 style="margin:0; font-size:13px;">Watches</h3></div>
+        <div class="category-card" onclick="filterCategory('Beauty')"><h3 style="margin:0; font-size:13px;">Beauty</h3></div>
+      </div>
+    </section>
+
+    <!-- SHOP & ADMIN INVENTORY SECTION -->
+    <section id="shopSection" class="hidden">
+      <div id="adminAddProduct" class="card hidden">
+        <div class="admin-controls-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:15px;">
+          <div>
+            <h3 style="margin:0; color:var(--accent-purple);">Admin Inventory Control</h3>
+            <p style="margin:4px 0 0 0; color:var(--text-secondary); font-size:12px;">Manage inventory, edit details, move items to trash, or import/export CSV</p>
+          </div>
+          
+          <div style="display:flex; gap:8px; align-items:center;" class="admin-only-csv">
+            <button onclick="toggleTrashView()" class="btn-csv" id="trashToggleBtn" style="background:#312e81;">🗑️ Trash Bin (<span id="trashCount">0</span>)</button>
+            <button onclick="exportProductsCSV()" class="btn-csv">📥 Export</button>
+            <label class="btn-csv" style="display:inline-block; cursor:pointer;">
+              📤 Import
+              <input type="file" id="csvFileInput" accept=".csv" onchange="importProductsCSV(event)" style="display:none;">
+            </label>
+          </div>
+        </div>
+
+        <form id="addProductForm" onsubmit="handleCreateProduct(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Product Name</label>
+              <input type="text" id="pName" required>
+            </div>
+            <div class="form-group">
+              <label>Price ($)</label>
+              <input type="number" step="0.01" id="pPrice" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Category</label>
+              <select id="pCategory">
+                <option value="Mens">Men's</option>
+                <option value="Womens">Women's</option>
+                <option value="Kids">Kids'</option>
+                <option value="Footwear">Footwear</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Watches">Watches</option>
+                <option value="Beauty">Beauty</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Image URL</label>
+              <input type="url" id="pImg">
+            </div>
+          </div>
+          <button type="submit" class="btn">Publish New Product</button>
+        </form>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+        <h2 style="font-size: 18px; margin:0;" id="catalogHeading">Products (<span id="totalProductsCount">0</span>)</h2>
+        <button onclick="resetShopFilter()" style="background:none; border:none; cursor:pointer; font-weight:500; color:var(--accent-purple); font-size:13px;">Show Active Catalog</button>
+      </div>
+      <div id="productGrid" class="product-grid"></div>
+    </section>
+
+    <!-- ADMIN ACCESS CONTROL PORTAL -->
+    <section id="adminMgmtSection" class="hidden">
+      <div class="card">
+        <h2 style="margin-top:0; color:var(--accent-purple);">👑 Main Admin Portal: User & Access Management</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-bottom:25px;">Create secondary admin IDs and configure granular permissions.</p>
+
+        <div style="background:#090a0f; padding:15px; border-radius:12px; border:1px solid var(--border-color); margin-bottom:30px;">
+          <h3 style="margin-top:0; font-size:16px;">Create New Admin Account</h3>
+          <form id="createAdminForm" onsubmit="handleCreateAdmin(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Admin Email</label>
+                <input type="email" id="newAdminEmail" placeholder="admin.sub@valentoaura.com" required>
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="newAdminPassword" placeholder="••••••••" required>
+                  <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('newAdminPassword', this)">👁️</button>
+                </div>
+                <div class="password-hint">Requires min 6 characters.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Assign Access Permissions</label>
+              <div class="permission-checkboxes">
+                <label><input type="checkbox" id="permInventory" checked> Manage Inventory (Add/Edit/Trash/CSV)</label>
+                <label><input type="checkbox" id="permOrders" checked> Manage Orders (Status/CSV)</label>
+                <label><input type="checkbox" id="permPayments" checked> View Payments (Audit Trail)</label>
+                <label><input type="checkbox" id="permMessages" checked> View Customer Inquiries</label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn" style="max-width:220px;">Create Admin ID</button>
+          </form>
+        </div>
+
+        <h3>Registered Admins & Access Controls</h3>
+        <div id="adminsTableContainer"></div>
+      </div>
+    </section>
+
+    <!-- ORDERS MANAGEMENT SECTION -->
+    <section id="ordersSection" class="hidden">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="margin:0;" id="ordersTitle">Placed Orders</h2>
+            <p style="margin:5px 0 0 0; color:var(--text-secondary); font-size:13px;" id="ordersSubtitle">Track and manage purchases</p>
+          </div>
+          <button onclick="exportOrdersCSV()" class="btn-csv hidden" id="exportOrdersBtn">📥 Export Orders (CSV)</button>
+        </div>
+
+        <div id="ordersContainer"></div>
+      </div>
+    </section>
+
+    <!-- PAYMENTS RECEIVED SECTION (ADMIN ONLY) -->
+    <section id="paymentsSection" class="hidden">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="margin:0;">Payments Received</h2>
+            <p style="margin:5px 0 0 0; color:var(--text-secondary); font-size:13px;">Complete audit trail of all completed payments</p>
+          </div>
+          <button onclick="exportPaymentsCSV()" class="btn-csv" id="exportPaymentsBtn">📥 Export Payments (CSV)</button>
+        </div>
+
+        <div id="paymentsContainer"></div>
+      </div>
+    </section>
+
+    <!-- MESSAGES / INQUIRIES SECTION (ADMIN ONLY) -->
+    <section id="messagesSection" class="hidden">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="margin:0;">Contact Inquiries</h2>
+            <p style="margin:5px 0 0 0; color:var(--text-secondary); font-size:13px;">Customer messages received through the contact form</p>
+          </div>
+          <button onclick="exportContactsCSV()" class="btn-csv" id="exportContactsBtn">📥 Export Contacts (CSV)</button>
+        </div>
+
+        <div id="messagesContainer"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION (BUYERS ONLY) -->
+    <section id="contactSection" class="hidden">
+      <div class="card">
+        <h2 style="margin-top:0;">Contact Us</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-bottom:20px;">Have questions? Submit your inquiry below.</p>
+        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+          <div class="form-group"><label>Name</label><input type="text" id="contactName" required></div>
+          <div class="form-group"><label>Email</label><input type="email" id="contactEmail" required></div>
+          <div class="form-group"><label>Message</label><textarea rows="4" id="contactMessage" required></textarea></div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- CART SECTION (BUYERS ONLY) -->
+    <section id="cartSection" class="hidden">
+      <div class="card">
+        <h2 style="margin-top:0;">Your Bag</h2>
+        <div id="cartItems"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:30px; flex-wrap:wrap; gap:15px;">
+          <h3 id="cartTotal" style="margin:0; font-size:20px;">Total: $0.00</h3>
+          <button onclick="openCheckoutModal()" class="btn" style="max-width:200px;" id="checkoutBtn">Checkout</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- EDIT PRODUCT MODAL -->
+  <div id="editProductModal" class="modal hidden">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Edit Product</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-top:5px;">Update product parameters in real time</p>
+      </div>
+      <form id="editProductForm" onsubmit="handleSaveEditedProduct(event)">
+        <input type="hidden" id="editProductId">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" id="editPName" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" step="0.01" id="editPPrice" required>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="editPCategory">
+              <option value="Mens">Men's</option>
+              <option value="Womens">Women's</option>
+              <option value="Kids">Kids'</option>
+              <option value="Footwear">Footwear</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Watches">Watches</option>
+              <option value="Beauty">Beauty</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input type="url" id="editPImg" required>
+        </div>
+        <button type="submit" class="btn">Save Changes</button>
+      </form>
+      <button onclick="closeEditModal()" class="btn btn-secondary" style="margin-top:12px;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION MODAL -->
+  <div id="authModal" class="modal hidden">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2 id="authModalTitle">Welcome Back</h2>
+        <p id="authModalSubtitle" style="color:var(--text-secondary); font-size:13px; margin-top:5px;">Enter your credentials to access Valento Aura</p>
+      </div>
+
+      <div class="role-selector">
+        <div id="roleOptBuyer" class="role-option active" onclick="setAuthRole('buyer')">Buyer Account</div>
+        <div id="roleOptAdmin" class="role-option" onclick="setAuthRole('admin')">Admin Console</div>
+      </div>
+      
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <input type="hidden" id="authRole" value="buyer">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="authEmail" placeholder="user@domain.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="authPassword" placeholder="••••••••" required>
+            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('authPassword', this)">👁️</button>
+          </div>
+          <div class="password-hint" id="passwordReqHint">Min 6 characters required.</div>
+        </div>
+        <button type="submit" class="btn" id="authSubmitBtn" style="margin-top:10px;">Sign In</button>
+      </form>
+
+      <div style="text-align:center; margin-top:20px; font-size:13px; color:var(--text-secondary);">
+        <span id="authToggleText">Don't have an account?</span>
+        <a href="#" onclick="toggleAuthMode()" id="authToggleLink" style="color:var(--accent-purple); text-decoration:none; font-weight:600; margin-left:5px;">Create One</a>
+      </div>
+
+      <button onclick="closeAuthModal()" class="btn btn-secondary" style="margin-top:15px; font-size:13px;">Close</button>
+    </div>
+  </div>
+
+  <!-- USER CHANGE PASSWORD MODAL -->
+  <div id="userPasswordModal" class="modal hidden">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Change Password</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-top:5px;">Update your account password</p>
+      </div>
+      <form id="changePasswordForm" onsubmit="handleUserPasswordChange(event)">
+        <div class="form-group">
+          <label>Current Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="currentPassword" required>
+            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('currentPassword', this)">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="userNewPassword" required>
+            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('userNewPassword', this)">👁️</button>
+          </div>
+          <div class="password-hint">Min 6 characters required.</div>
+        </div>
+        <button type="submit" class="btn">Update Password</button>
+      </form>
+      <button onclick="closePasswordModal()" class="btn btn-secondary" style="margin-top:15px; font-size:13px;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN OVERRIDE PASSWORD MODAL -->
+  <div id="adminPasswordModal" class="modal hidden">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Reset Admin Password</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-top:5px;" id="targetAdminText">Target Admin: </p>
+      </div>
+      <form id="resetAdminPasswordForm" onsubmit="handleAdminPasswordReset(event)">
+        <input type="hidden" id="targetAdminEmail">
+        <div class="form-group">
+          <label>New Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="adminSetNewPassword" required>
+            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('adminSetNewPassword', this)">👁️</button>
+          </div>
+          <div class="password-hint">Min 6 characters required.</div>
+        </div>
+        <button type="submit" class="btn">Force Password Reset</button>
+      </form>
+      <button onclick="closeAdminPasswordModal()" class="btn btn-secondary" style="margin-top:15px; font-size:13px;">Cancel</button>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="modal hidden">
+    <div class="auth-card">
+      <h3 style="margin-top:0;">Payment Gateway</h3>
+      <p style="color:var(--text-secondary); font-size:14px; margin-bottom:20px;">Total: <strong id="modalPayAmount" style="color:var(--text-primary); font-size:16px;">$0.00</strong></p>
+
+      <form id="cardPaymentForm" onsubmit="processCardPayment(event)">
+        <div class="form-group"><label>Customer Email</label><input type="email" id="checkoutEmail" placeholder="customer@domain.com" required></div>
+        <div class="form-group"><label>Cardholder Name</label><input type="text" placeholder="John Doe" required></div>
+        <div class="form-group"><label>Card Number</label><input type="text" placeholder="4532 •••• •••• 8892" maxlength="19" required></div>
+        <div class="form-row">
+          <div class="form-group"><label>Expiry Date</label><input type="text" placeholder="MM/YY" maxlength="5" required></div>
+          <div class="form-group">
+            <label>CVV</label>
+            <div class="password-wrapper">
+              <input type="password" placeholder="123" maxlength="4" id="cvvInput" required>
+              <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('cvvInput', this)">👁️</button>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn" id="payNowBtn">Complete Payment</button>
+      </form>
+
+      <button onclick="closeCheckoutModal()" class="btn btn-secondary" style="margin-top:15px; font-size:13px;">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let trashedProducts = JSON.parse(localStorage.getItem('trashedProducts')) || [];
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    let payments = JSON.parse(localStorage.getItem('payments')) || [];
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    let adminsList = JSON.parse(localStorage.getItem('adminsList')) || [];
+    let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+    let cart = [];
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || { role: 'guest', email: '' };
+    let isSignUpMode = false;
+    let showingTrashBin = false;
+
+    const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const PASSWORD_REGEX = /^.{6,}$/;
+
+    function toggleMobileMenu() {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('active');
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerText = '🙈';
+      } else {
+        input.type = 'password';
+        btn.innerText = '👁️';
+      }
+    }
+
+    window.onload = function() {
+      ensureDefaultAdmin();
+
+      if (products.length === 0 && trashedProducts.length === 0) generate100SampleProducts();
+      if (orders.length === 0) generateSampleOrders();
+      if (payments.length === 0) generateSamplePayments();
+      if (contacts.length === 0) generateSampleContacts();
+
+      updateAuthUI();
+      updateTrashCount();
+      renderProducts(products);
+      updateOrdersCount();
+    };
+
+    function ensureDefaultAdmin() {
+      const mainEmail = 'mainadmin@valentoaura.com';
+      const mainPassword = 'Special@@2006';
+      
+      let mainAdminIndex = adminsList.findIndex(a => a.email && a.email.toLowerCase() === mainEmail);
+
+      if (mainAdminIndex === -1) {
+        adminsList.unshift({
+          email: mainEmail,
+          password: mainPassword,
+          isMainAdmin: true,
+          perms: { inventory: true, orders: true, payments: true, messages: true }
+        });
+      } else {
+        adminsList[mainAdminIndex].password = mainPassword;
+        adminsList[mainAdminIndex].isMainAdmin = true;
+      }
+      localStorage.setItem('adminsList', JSON.stringify(adminsList));
+    }
+
+    function updateTrashCount() {
+      const el = document.getElementById('trashCount');
+      if (el) el.innerText = trashedProducts.length;
+    }
+
+    function setAuthRole(role) {
+      document.getElementById('authRole').value = role;
+      if (role === 'buyer') {
+        document.getElementById('roleOptBuyer').classList.add('active');
+        document.getElementById('roleOptAdmin').classList.remove('active');
+      } else {
+        document.getElementById('roleOptAdmin').classList.add('active');
+        document.getElementById('roleOptBuyer').classList.remove('active');
+      }
+    }
+
+    function isMainAdmin(email) {
+      if (!email) return false;
+      return email.toLowerCase() === 'mainadmin@valentoaura.com';
+    }
+
+    function getAdminPermissions(email) {
+      if (isMainAdmin(email)) return { inventory: true, orders: true, payments: true, messages: true };
+      const found = adminsList.find(a => a.email.toLowerCase() === email.toLowerCase());
+      return found ? found.perms : { inventory: false, orders: false, payments: false, messages: false };
+    }
+
+    function updateAuthUI() {
+      const roleText = document.getElementById('currentRoleText');
+      const authBtns = document.getElementById('authButtons');
+
+      const contactNav = document.getElementById('contactNavLink');
+      const cartNav = document.getElementById('cartNavLink');
+      const paymentsNav = document.getElementById('paymentsNavLink');
+      const messagesNav = document.getElementById('messagesNavLink');
+      const adminMgmtNav = document.getElementById('adminMgmtNavLink');
+      const adminInventoryPanel = document.getElementById('adminAddProduct');
+      const exportOrdersBtn = document.getElementById('exportOrdersBtn');
+
+      roleText.innerText = currentUser.role.toUpperCase();
+
+      if (currentUser.email) {
+        authBtns.innerHTML = `
+          <span style="font-size:12px; margin-right:6px; color:var(--text-secondary);">${currentUser.email} (${currentUser.role})</span>
+          <button onclick="openUserPasswordModal()" style="background:transparent; border:1px solid var(--accent-purple); color:var(--accent-purple); padding:3px 8px; border-radius:6px; cursor:pointer; font-size:11px; margin-right:4px;">Password</button>
+          <button onclick="handleSignOut()" style="background:transparent; border:1px solid var(--border-color); color:var(--text-primary); padding:3px 8px; border-radius:6px; font-size:11px; cursor:pointer;">Sign Out</button>
+        `;
+      } else {
+        authBtns.innerHTML = `
+          <button onclick="openAuthModal('login')" style="background:var(--accent-purple); color:white; padding:5px 14px; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Sign In</button>
+        `;
+      }
+
+      if (currentUser.role === 'admin') {
+        contactNav.classList.add('hidden');
+        cartNav.classList.add('hidden');
+        exportOrdersBtn.classList.remove('hidden');
+
+        const perms = getAdminPermissions(currentUser.email);
+
+        if (perms.inventory) adminInventoryPanel.classList.remove('hidden'); else adminInventoryPanel.classList.add('hidden');
+        if (perms.payments) paymentsNav.classList.remove('hidden'); else paymentsNav.classList.add('hidden');
+        if (perms.messages) messagesNav.classList.remove('hidden'); else messagesNav.classList.add('hidden');
+
+        if (isMainAdmin(currentUser.email)) {
+          adminMgmtNav.classList.remove('hidden');
+        } else {
+          adminMgmtNav.classList.add('hidden');
+        }
+
+      } else {
+        contactNav.classList.remove('hidden');
+        cartNav.classList.remove('hidden');
+        exportOrdersBtn.classList.add('hidden');
+
+        adminInventoryPanel.classList.add('hidden');
+        paymentsNav.classList.add('hidden');
+        messagesNav.classList.add('hidden');
+        adminMgmtNav.classList.add('hidden');
+      }
+
+      showingTrashBin = false;
+      renderProducts(products);
+      updateOrdersCount();
+    }
+
+    function openAuthModal(mode) {
+      isSignUpMode = (mode === 'signup');
+      updateAuthModalTexts();
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').classList.add('hidden');
+    }
+
+    function toggleAuthMode() {
+      isSignUpMode = !isSignUpMode;
+      updateAuthModalTexts();
+    }
+
+    function updateAuthModalTexts() {
+      document.getElementById('authModalTitle').innerText = isSignUpMode ? 'Create Account' : 'Welcome Back';
+      document.getElementById('authModalSubtitle').innerText = isSignUpMode ? 'Join Valento Aura Enterprise' : 'Enter your verified credentials';
+      document.getElementById('authSubmitBtn').innerText = isSignUpMode ? 'Create Account' : 'Sign In';
+      document.getElementById('authToggleText').innerText = isSignUpMode ? 'Already have an account?' : "Don't have an account?";
+      document.getElementById('authToggleLink').innerText = isSignUpMode ? 'Sign In' : 'Create One';
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const role = document.getElementById('authRole').value;
+
+      if (!EMAIL_REGEX.test(email)) {
+        alert('Invalid Email Format!');
+        return;
+      }
+
+      if (!PASSWORD_REGEX.test(password)) {
+        alert('Password must contain at least 6 characters.');
+        return;
+      }
+
+      if (role === 'admin') {
+        if (isSignUpMode) {
+          alert('Access Denied: Admin accounts can only be created by the Main Admin in the Admin Portal.');
+          return;
+        }
+
+        const registeredAdmin = adminsList.find(a => a.email.toLowerCase() === email.toLowerCase());
+
+        if (!registeredAdmin) {
+          alert('Access Denied: Unregistered Admin Email.');
+          return;
+        }
+
+        if (registeredAdmin.password !== password) {
+          alert('Incorrect Password for Admin account!');
+          return;
+        }
+
+        currentUser = { email: registeredAdmin.email, role: 'admin' };
+      } 
+      else {
+        if (isSignUpMode) {
+          const userExists = registeredUsers.some(u => u.email.toLowerCase() === email.toLowerCase());
+          if (userExists) {
+            alert('An account with this email already exists. Please log in.');
+            return;
+          }
+          registeredUsers.push({ email: email, password: password });
+          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+          currentUser = { email: email, role: 'buyer' };
+        } else {
+          const user = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+          if (user && user.password !== password) {
+            alert('Incorrect Password!');
+            return;
+          }
+          currentUser = { email: email, role: 'buyer' };
+        }
+      }
+
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      alert(`${isSignUpMode ? 'Account created' : 'Logged in'} successfully as ${currentUser.role.toUpperCase()}!`);
+      updateAuthUI();
+      closeAuthModal();
+      showSection('home');
+    }
+
+    function handleSignOut() {
+      currentUser = { role: 'guest', email: '' };
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      alert('You have signed out.');
+      updateAuthUI();
+      showSection('home');
+    }
+
+    function moveToTrash(id) {
+      const idx = products.findIndex(p => p.id === id);
+      if (idx !== -1) {
+        const item = products.splice(idx, 1)[0];
+        trashedProducts.unshift(item);
+        localStorage.setItem('products', JSON.stringify(products));
+        localStorage.setItem('trashedProducts', JSON.stringify(trashedProducts));
+        updateTrashCount();
+        renderProducts(showingTrashBin ? trashedProducts : products);
+        alert(`"${item.name}" moved to Trash Bin.`);
+      }
+    }
+
+    function restoreFromTrash(id) {
+      const idx = trashedProducts.findIndex(p => p.id === id);
+      if (idx !== -1) {
+        const item = trashedProducts.splice(idx, 1)[0];
+        products.unshift(item);
+        localStorage.setItem('products', JSON.stringify(products));
+        localStorage.setItem('trashedProducts', JSON.stringify(trashedProducts));
+        updateTrashCount();
+        renderProducts(showingTrashBin ? trashedProducts : products);
+        alert(`"${item.name}" restored to Active Inventory.`);
+      }
+    }
+
+    function deletePermanently(id) {
+      if (!confirm("Are you sure you want to permanently delete this product? This action cannot be undone.")) return;
+      
+      const idx = trashedProducts.findIndex(p => p.id === id);
+      if (idx !== -1) {
+        trashedProducts.splice(idx, 1);
+        localStorage.setItem('trashedProducts', JSON.stringify(trashedProducts));
+        updateTrashCount();
+        renderProducts(trashedProducts);
+        alert("Product permanently deleted.");
+      }
+    }
+
+    function toggleTrashView() {
+      showingTrashBin = !showingTrashBin;
+      const heading = document.getElementById('catalogHeading');
+      const toggleBtn = document.getElementById('trashToggleBtn');
+
+      if (showingTrashBin) {
+        heading.innerText = `Trash Bin (${trashedProducts.length})`;
+        toggleBtn.innerText = "📦 Active Catalog";
+        renderProducts(trashedProducts);
+      } else {
+        heading.innerText = `Products (${products.length})`;
+        toggleBtn.innerText = `🗑️ Trash Bin (${trashedProducts.length})`;
+        renderProducts(products);
+      }
+    }
+
+    function resetShopFilter() {
+      showingTrashBin = false;
+      document.getElementById('catalogHeading').innerText = `Products (${products.length})`;
+      renderProducts(products);
+    }
+
+    function openEditModal(id) {
+      const list = showingTrashBin ? trashedProducts : products;
+      const item = list.find(p => p.id === id);
+      if (!item) return;
+
+      document.getElementById('editProductId').value = item.id;
+      document.getElementById('editPName').value = item.name;
+      document.getElementById('editPPrice').value = item.price;
+      document.getElementById('editPCategory').value = item.category;
+      document.getElementById('editPImg').value = item.img;
+
+      document.getElementById('editProductModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editProductModal').classList.add('hidden');
+    }
+
+    function handleSaveEditedProduct(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('editProductId').value);
+      const name = document.getElementById('editPName').value.trim();
+      const price = parseFloat(document.getElementById('editPPrice').value);
+      const category = document.getElementById('editPCategory').value;
+      const img = document.getElementById('editPImg').value.trim();
+
+      const list = showingTrashBin ? trashedProducts : products;
+      const item = list.find(p => p.id === id);
+
+      if (item) {
+        item.name = name;
+        item.price = price;
+        item.category = category;
+        item.img = img;
+
+        if (showingTrashBin) {
+          localStorage.setItem('trashedProducts', JSON.stringify(trashedProducts));
+        } else {
+          localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        renderProducts(list);
+        closeEditModal();
+        alert(`Product "${name}" successfully updated!`);
+      }
+    }
+
+    function renderProducts(list) {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+      document.getElementById('totalProductsCount').innerText = list.length;
+
+      if (list.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-secondary); grid-column: 1/-1; text-align:center; padding: 40px 0;">No items found in ${showingTrashBin ? 'Trash Bin' : 'Active Catalog'}.</p>`;
+        return;
+      }
+
+      list.forEach(p => {
+        let actionButtons = '';
+
+        if (currentUser.role === 'admin') {
+          if (showingTrashBin) {
+            actionButtons = `
+              <div class="admin-card-actions">
+                <button class="btn-admin-action btn-restore" onclick="restoreFromTrash(${p.id})">Restore</button>
+                <button class="btn-admin-action btn-trash" onclick="deletePermanently(${p.id})">Delete</button>
+              </div>
+            `;
+          } else {
+            actionButtons = `
+              <div class="admin-card-actions">
+                <button class="btn-admin-action btn-edit" onclick="openEditModal(${p.id})">✏️ Edit</button>
+                <button class="btn-admin-action btn-trash" onclick="moveToTrash(${p.id})">🗑️ Trash</button>
+              </div>
+            `;
+          }
+        } else {
+          actionButtons = `<button class="btn" style="margin-top:10px;" onclick="addToCart(${p.id})">Add to Bag</button>`;
+        }
+
+        grid.innerHTML += `
+          <div class="product-card">
+            <div>
+              <img src="${p.img}" alt="${p.name}">
+              <h3 style="font-size:14px; margin: 0 0 4px 0;">${p.name}</h3>
+              <p style="color:var(--text-secondary); font-size:11px; margin: 0 0 8px 0;">${p.category}</p>
+              <p style="font-size:15px; font-weight:700; margin:0 0 10px 0;">$${p.price.toFixed(2)}</p>
+            </div>
+            ${actionButtons}
+          </div>
+        `;
+      });
+    }
+
+    function handleCreateProduct(e) {
+      e.preventDefault();
+      const name = document.getElementById('pName').value.trim();
+      const price = parseFloat(document.getElementById('pPrice').value);
+      const category = document.getElementById('pCategory').value;
+      const img = document.getElementById('pImg').value.trim() || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500';
+
+      const newProd = { id: Date.now(), name, price, category, img };
+
+      products.unshift(newProd);
+      localStorage.setItem('products', JSON.stringify(products));
+      showingTrashBin = false;
+      renderProducts(products);
+      document.getElementById('addProductForm').reset();
+      alert(`Product "${name}" published!`);
+    }
+
+    function handleCreateAdmin(e) {
+      e.preventDefault();
+      const email = document.getElementById('newAdminEmail').value.trim();
+      const pass = document.getElementById('newAdminPassword').value;
+
+      if (!EMAIL_REGEX.test(email)) {
+        alert('Invalid Admin Email Format!');
+        return;
+      }
+
+      if (!PASSWORD_REGEX.test(pass)) {
+        alert('Admin Password must contain at least 6 characters.');
+        return;
+      }
+
+      const perms = {
+        inventory: document.getElementById('permInventory').checked,
+        orders: document.getElementById('permOrders').checked,
+        payments: document.getElementById('permPayments').checked,
+        messages: document.getElementById('permMessages').checked
+      };
+
+      const existingIndex = adminsList.findIndex(a => a.email.toLowerCase() === email.toLowerCase());
+      if (existingIndex >= 0) {
+        adminsList[existingIndex].perms = perms;
+        adminsList[existingIndex].password = pass;
+        alert(`Permissions and password updated for Admin: ${email}`);
+      } else {
+        adminsList.push({ email: email, password: pass, isMainAdmin: false, perms: perms });
+        alert(`New Admin ID created: ${email}`);
+      }
+
+      localStorage.setItem('adminsList', JSON.stringify(adminsList));
+      document.getElementById('createAdminForm').reset();
+      renderAdminsList();
+    }
+
+    function toggleAdminAccess(email, permType, isChecked) {
+      const admin = adminsList.find(a => a.email.toLowerCase() === email.toLowerCase());
+      if (admin) {
+        admin.perms[permType] = isChecked;
+        localStorage.setItem('adminsList', JSON.stringify(adminsList));
+        alert(`Updated ${permType} permission for ${email}`);
+      }
+    }
+
+    function renderAdminsList() {
+      const container = document.getElementById('adminsTableContainer');
+      if (adminsList.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary);">No administrative accounts found.</p>';
+        return;
+      }
+
+      let html = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Admin Email</th>
+                <th>Tier</th>
+                <th>Inventory</th>
+                <th>Orders</th>
+                <th>Payments</th>
+                <th>Inquiries</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      adminsList.forEach(a => {
+        const isMain = a.isMainAdmin || isMainAdmin(a.email);
+        html += `
+          <tr>
+            <td><strong>${a.email}</strong></td>
+            <td><span class="badge-status ${isMain ? 'badge-delivered' : 'badge-shipped'}">${isMain ? 'Main' : 'Sub'}</span></td>
+            <td><input type="checkbox" ${a.perms.inventory ? 'checked' : ''} ${isMain ? 'disabled' : ''} onchange="toggleAdminAccess('${a.email}', 'inventory', this.checked)"></td>
+            <td><input type="checkbox" ${a.perms.orders ? 'checked' : ''} ${isMain ? 'disabled' : ''} onchange="toggleAdminAccess('${a.email}', 'orders', this.checked)"></td>
+            <td><input type="checkbox" ${a.perms.payments ? 'checked' : ''} ${isMain ? 'disabled' : ''} onchange="toggleAdminAccess('${a.email}', 'payments', this.checked)"></td>
+            <td><input type="checkbox" ${a.perms.messages ? 'checked' : ''} ${isMain ? 'disabled' : ''} onchange="toggleAdminAccess('${a.email}', 'messages', this.checked)"></td>
+            <td>
+              ${!isMain ? `<button onclick="openAdminPasswordModal('${a.email}')" style="background:var(--accent-purple); color:white; border:none; padding:4px 8px; border-radius:4px; font-size:11px; cursor:pointer;">Reset</button>` : '<span style="color:var(--text-secondary); font-size:11px;">N/A</span>'}
+            </td>
+          </tr>
+        `;
+      });
+
+      html += 'tbody></table></div>';
+      container.innerHTML = html;
+    }
+
+    function openUserPasswordModal() {
+      document.getElementById('userPasswordModal').classList.remove('hidden');
+    }
+
+    function closePasswordModal() {
+      document.getElementById('userPasswordModal').classList.add('hidden');
+      document.getElementById('changePasswordForm').reset();
+    }
+
+    function handleUserPasswordChange(e) {
+      e.preventDefault();
+      const currentPass = document.getElementById('currentPassword').value;
+      const newPass = document.getElementById('userNewPassword').value;
+
+      if (!PASSWORD_REGEX.test(newPass)) {
+        alert('New password must contain at least 6 characters.');
+        return;
+      }
+
+      if (currentUser.role === 'admin') {
+        const adminIndex = adminsList.findIndex(a => a.email.toLowerCase() === currentUser.email.toLowerCase());
+        if (adminIndex >= 0) {
+          if (adminsList[adminIndex].password && adminsList[adminIndex].password !== currentPass) {
+            alert('Current password does not match!');
+            return;
+          }
+          adminsList[adminIndex].password = newPass;
+          localStorage.setItem('adminsList', JSON.stringify(adminsList));
+        }
+      } else {
+        const userIndex = registeredUsers.findIndex(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
+        if (userIndex >= 0) {
+          if (registeredUsers[userIndex].password && registeredUsers[userIndex].password !== currentPass) {
+            alert('Current password does not match!');
+            return;
+          }
+          registeredUsers[userIndex].password = newPass;
+          localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+        }
+      }
+
+      alert('Password changed successfully!');
+      closePasswordModal();
+    }
+
+    function openAdminPasswordModal(targetEmail) {
+      document.getElementById('targetAdminEmail').value = targetEmail;
+      document.getElementById('targetAdminText').innerText = `Target Admin: ${targetEmail}`;
+      document.getElementById('adminPasswordModal').classList.remove('hidden');
+    }
+
+    function closeAdminPasswordModal() {
+      document.getElementById('adminPasswordModal').classList.add('hidden');
+      document.getElementById('resetAdminPasswordForm').reset();
+    }
+
+    function handleAdminPasswordReset(e) {
+      e.preventDefault();
+      const targetEmail = document.getElementById('targetAdminEmail').value;
+      const newPass = document.getElementById('adminSetNewPassword').value;
+
+      if (!PASSWORD_REGEX.test(newPass)) {
+        alert('Password must contain at least 6 characters.');
+        return;
+      }
+
+      const admin = adminsList.find(a => a.email.toLowerCase() === targetEmail.toLowerCase());
+      if (admin) {
+        admin.password = newPass;
+        localStorage.setItem('adminsList', JSON.stringify(adminsList));
+        alert(`Password for ${targetEmail} updated successfully!`);
+        closeAdminPasswordModal();
+      } else {
+        alert('Admin account not found.');
+      }
+    }
+
+    function generateSampleOrders() {
+      orders = [
+        { id: 'VA-109823', email: 'verified.buyer@domain.com', items: ['Watch Collection #1', 'Men Item #3'], total: 289.98, paymentMethod: 'Card', status: 'Delivered', date: '2026-03-10' },
+        { id: 'VA-109824', email: 'alex.dev@gmail.com', items: ['Footwear Item #5'], total: 119.50, paymentMethod: 'Card', status: 'Shipped', date: '2026-03-14' }
+      ];
+      localStorage.setItem('orders', JSON.stringify(orders));
+    }
+
+    function generateSamplePayments() {
+      payments = [
+        { txnId: 'TXN-984210', orderId: 'VA-109823', email: 'verified.buyer@domain.com', amount: 289.98, method: 'Card', status: 'SUCCESS', date: '2026-03-10' }
+      ];
+      localStorage.setItem('payments', JSON.stringify(payments));
+    }
+
+    function generateSampleContacts() {
+      contacts = [
+        { id: 1, name: 'Eleanor Vance', email: 'eleanor@vance.org', message: 'Inquiring about custom order delivery times.', date: '2026-03-11' }
+      ];
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+
+    function updateOrdersCount() {
+      if (!currentUser.email || currentUser.role === 'guest') {
+        document.getElementById('ordersCountNav').innerText = '0';
+        return;
+      }
+      const displayOrders = currentUser.role === 'admin' 
+        ? orders 
+        : orders.filter(o => o.email.toLowerCase() === currentUser.email.toLowerCase());
+      document.getElementById('ordersCountNav').innerText = displayOrders.length;
+    }
+
+    function renderOrders() {
+      const container = document.getElementById('ordersContainer');
+      const title = document.getElementById('ordersTitle');
+      const subtitle = document.getElementById('ordersSubtitle');
+      
+      if (!currentUser.email || currentUser.role === 'guest') {
+        title.innerText = "My Purchase History";
+        subtitle.innerText = "Please sign in to view your orders.";
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:30px 0;">🔒 You are not signed in. Log in with a buyer account to see your order history.</p>';
+        return;
+      }
+
+      const filteredOrders = currentUser.role === 'admin' 
+        ? orders 
+        : orders.filter(o => o.email.toLowerCase() === currentUser.email.toLowerCase());
+
+      if (currentUser.role === 'admin') {
+        title.innerText = "Admin Orders Management";
+        subtitle.innerText = "Viewing all orders submitted across the store.";
+      } else {
+        title.innerText = "My Purchase History";
+        subtitle.innerText = `Showing orders placed by ${currentUser.email}`;
+      }
+
+      if (filteredOrders.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:30px 0;">No orders found.</p>';
+        return;
+      }
+
+      let html = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items Purchased</th>
+                <th>Total</th>
+                <th>Method</th>
+                <th>Date</th>
+                <th>Status</th>
+                ${currentUser.role === 'admin' ? '<th>Action</th>' : ''}
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      filteredOrders.forEach(o => {
+        let badgeClass = 'badge-pending';
+        if (o.status === 'Shipped') badgeClass = 'badge-shipped';
+        if (o.status === 'Delivered') badgeClass = 'badge-delivered';
+
+        html += `
+          <tr>
+            <td><strong>#${o.id}</strong></td>
+            <td>${o.email}</td>
+            <td>${o.items.join(', ')}</td>
+            <td>$${parseFloat(o.total).toFixed(2)}</td>
+            <td>${o.paymentMethod}</td>
+            <td>${o.date}</td>
+            <td><span class="badge-status ${badgeClass}">${o.status}</span></td>
+            ${currentUser.role === 'admin' ? `
+              <td>
+                <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding:4px; font-size:11px; background:#12141d; color:white; border:1px solid var(--border-color); border-radius:6px;">
+                  <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                  <option value="Shipped" ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                  <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                </select>
+              </td>
+            ` : ''}
+          </tr>
+        `;
+      });
+
+      html += 'tbody></table></div>';
+      container.innerHTML = html;
+      updateOrdersCount();
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        localStorage.setItem('orders', JSON.stringify(orders));
+        renderOrders();
+        alert(`Order #${orderId} status changed to ${newStatus}`);
+      }
+    }
+
+    function renderPayments() {
+      const container = document.getElementById('paymentsContainer');
+      if (payments.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:30px 0;">No payments recorded yet.</p>';
+        return;
+      }
+
+      let html = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Txn ID</th>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      payments.forEach(p => {
+        html += `
+          <tr>
+            <td><strong>${p.txnId}</strong></td>
+            <td>#${p.orderId}</td>
+            <td>${p.email}</td>
+            <td>$${parseFloat(p.amount).toFixed(2)}</td>
+            <td>${p.method}</td>
+            <td>${p.date}</td>
+            <td><span class="badge-status badge-delivered">${p.status}</span></td>
+          </tr>
+        `;
+      });
+
+      html += 'tbody></table></div>';
+      container.innerHTML = html;
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('messagesContainer');
+      if (contacts.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:30px 0;">No inquiries received yet.</p>';
+        return;
+      }
+
+      let html = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message Content</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      contacts.forEach(c => {
+        html += `
+          <tr>
+            <td>${c.date}</td>
+            <td><strong>${c.name}</strong></td>
+            <td>${c.email}</td>
+            <td>${c.message}</td>
+          </tr>
+        `;
+      });
+
+      html += 'tbody></table></div>';
+      container.innerHTML = html;
+    }
+
+    function exportOrdersCSV() {
+      if (currentUser.role !== 'admin') return alert('Access Denied: Only Admins can export CSV data.');
+      if (orders.length === 0) return alert('No orders available to export.');
+      let csvContent = "data:text/csv;charset=utf-8,OrderID,CustomerEmail,Items,TotalAmount,PaymentMethod,Status,Date\n";
+      orders.forEach(o => {
+        csvContent += `"${o.id}","${o.email}","${o.items.join('; ')}","${o.total}","${o.paymentMethod}","${o.status}","${o.date}"\n`;
+      });
+      downloadCSV(csvContent, "valento_aura_orders.csv");
+    }
+
+    function exportPaymentsCSV() {
+      if (currentUser.role !== 'admin') return alert('Access Denied: Only Admins can export CSV data.');
+      if (payments.length === 0) return alert('No payment records available to export.');
+      let csvContent = "data:text/csv;charset=utf-8,TxnID,OrderID,CustomerEmail,Amount,PaymentMethod,Status,Date\n";
+      payments.forEach(p => {
+        csvContent += `"${p.txnId}","${p.orderId}","${p.email}","${p.amount}","${p.method}","${p.status}","${p.date}"\n`;
+      });
+      downloadCSV(csvContent, "valento_aura_payments_received.csv");
+    }
+
+    function exportContactsCSV() {
+      if (currentUser.role !== 'admin') return alert('Access Denied: Only Admins can export CSV data.');
+      if (contacts.length === 0) return alert('No contact inquiries available to export.');
+      let csvContent = "data:text/csv;charset=utf-8,ID,Date,Name,Email,Message\n";
+      contacts.forEach(c => {
+        csvContent += `"${c.id}","${c.date}","${c.name}","${c.email}","${c.message.replace(/"/g, '""')}"\n`;
+      });
+      downloadCSV(csvContent, "valento_aura_contact_inquiries.csv");
+    }
+
+    function exportProductsCSV() {
+      if (currentUser.role !== 'admin') return alert('Access Denied: Only Admins can export CSV data.');
+      if (products.length === 0) return alert('No products available to export.');
+      let csvContent = "data:text/csv;charset=utf-8,ID,Name,Price,Category,ImageURL\n";
+      products.forEach(p => {
+        csvContent += `"${p.id}","${p.name}","${p.price}","${p.category}","${p.img}"\n`;
+      });
+      downloadCSV(csvContent, "valento_aura_products.csv");
+    }
+
+    function downloadCSV(csvContent, fileName) {
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function importProductsCSV(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const lines = evt.target.result.split('\n');
+        const imported = [];
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+          if (cols.length >= 4) {
+            imported.push({
+              id: Date.now() + i,
+              name: cols[1] || 'Imported Item',
+              price: parseFloat(cols[2]) || 0.00,
+              category: cols[3] || 'Accessories',
+              img: cols[4] || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500'
+            });
+          }
+        }
+        if (imported.length > 0) {
+          products = imported.concat(products);
+          localStorage.setItem('products', JSON.stringify(products));
+          renderProducts(products);
+          alert(`Successfully imported ${imported.length} products!`);
+        } else {
+          alert('Could not parse CSV file format.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function generate100SampleProducts() {
+      const categories = ['Mens', 'Womens', 'Kids', 'Footwear', 'Accessories', 'Watches', 'Beauty'];
+      const sampleImg = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500';
+
+      const list = [];
+      let counter = 1;
+      categories.forEach(cat => {
+        for (let i = 1; i <= 15; i++) {
+          list.push({
+            id: counter,
+            name: `${cat} Item #${i}`,
+            price: parseFloat((Math.random() * 200 + 20).toFixed(2)),
+            category: cat,
+            img: sampleImg
+          });
+          counter++;
+        }
+      });
+      products = list;
+      localStorage.setItem('products', JSON.stringify(products));
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+
+      if (!EMAIL_REGEX.test(email)) {
+        alert('Please provide a valid email address.');
+        return;
+      }
+
+      const newContact = {
+        id: Date.now(),
+        name,
+        email,
+        message,
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      contacts.unshift(newContact);
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      alert('Thank you for reaching out! Your message has been sent to our administration team.');
+      e.target.reset();
+    }
+
+    function addToCart(id) {
+      const item = products.find(p => p.id === id);
+      cart.push(item);
+      document.getElementById('cartCount').innerText = cart.length;
+      alert(`${item.name} added to cart!`);
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItems');
+      container.innerHTML = '';
+      let total = 0;
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary);">Your shopping bag is empty.</p>';
+        document.getElementById('checkoutBtn').disabled = true;
+      } else {
+        document.getElementById('checkoutBtn').disabled = false;
+        cart.forEach((item, index) => {
+          total += item.price;
+          container.innerHTML += `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-color);">
+              <span><strong>${item.name}</strong> - $${item.price.toFixed(2)}</span>
+              <button onclick="removeFromCart(${index})" style="color:#ef4444; background:none; border:none; cursor:pointer;">Remove</button>
+            </div>
+          `;
+        });
+      }
+      document.getElementById('cartTotal').innerText = `Total: $${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(i) {
+      cart.splice(i, 1);
+      document.getElementById('cartCount').innerText = cart.length;
+      renderCart();
+    }
+
+    function showSection(id) {
+      document.getElementById('mainNav').classList.remove('active');
+
+      document.getElementById('homeSection').classList.add('hidden');
+      document.getElementById('shopSection').classList.add('hidden');
+      document.getElementById('adminMgmtSection').classList.add('hidden');
+      document.getElementById('ordersSection').classList.add('hidden');
+      document.getElementById('paymentsSection').classList.add('hidden');
+      document.getElementById('messagesSection').classList.add('hidden');
+      document.getElementById('contactSection').classList.add('hidden');
+      document.getElementById('cartSection').classList.add('hidden');
+
+      if (id === 'home') document.getElementById('homeSection').classList.remove('hidden');
+      if (id === 'shop') document.getElementById('shopSection').classList.remove('hidden');
+      if (id === 'adminMgmt') {
+        document.getElementById('adminMgmtSection').classList.remove('hidden');
+        renderAdminsList();
+      }
+      if (id === 'orders') {
+        document.getElementById('ordersSection').classList.remove('hidden');
+        renderOrders();
+      }
+      if (id === 'payments') {
+        document.getElementById('paymentsSection').classList.remove('hidden');
+        renderPayments();
+      }
+      if (id === 'messages') {
+        document.getElementById('messagesSection').classList.remove('hidden');
+        renderMessages();
+      }
+      if (id === 'contact') document.getElementById('contactSection').classList.remove('hidden');
+      if (id === 'cart') {
+        document.getElementById('cartSection').classList.remove('hidden');
+        renderCart();
+      }
+    }
+
+    function filterCategory(cat) {
+      showSection('shop');
+      showingTrashBin = false;
+      renderProducts(products.filter(p => p.category === cat));
+    }
+
+    function calculateCartTotal() {
+      return cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+    }
+
+    function openCheckoutModal() {
+      if (cart.length === 0) return alert('Your cart is empty.');
+      document.getElementById('modalPayAmount').innerText = `$${calculateCartTotal()}`;
+      if (currentUser.email) {
+        document.getElementById('checkoutEmail').value = currentUser.email;
+      }
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+    }
+
+    function recordNewOrder(email) {
+      const totalAmt = parseFloat(calculateCartTotal());
+      const orderId = `VA-${Math.floor(100000 + Math.random() * 900000)}`;
+      const txnId = `TXN-${Math.floor(100000 + Math.random() * 900000)}`;
+      const today = new Date().toISOString().split('T')[0];
+
+      const newOrder = {
+        id: orderId,
+        email: email || currentUser.email || 'guest@domain.com',
+        items: cart.map(i => i.name),
+        total: totalAmt,
+        paymentMethod: 'Card',
+        status: 'Pending',
+        date: today
+      };
+      orders.unshift(newOrder);
+      localStorage.setItem('orders', JSON.stringify(orders));
+
+      const newPayment = {
+        txnId: txnId,
+        orderId: orderId,
+        email: email || currentUser.email || 'guest@domain.com',
+        amount: totalAmt,
+        method: 'Card',
+        status: 'SUCCESS',
+        date: today
+      };
+      payments.unshift(newPayment);
+      localStorage.setItem('payments', JSON.stringify(payments));
+
+      return orderId;
+    }
+
+    function processCardPayment(e) {
+      e.preventDefault();
+      const email = document.getElementById('checkoutEmail').value.trim();
+
+      if (!EMAIL_REGEX.test(email)) {
+        alert('Invalid email address provided for payment receipt!');
+        return;
+      }
+
+      const btn = document.getElementById('payNowBtn');
+      btn.innerText = "Processing...";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        const orderId = recordNewOrder(email);
+        alert(`Payment Successful! Order ID: #${orderId}.`);
+        cart = [];
+        document.getElementById('cartCount').innerText = 0;
+        closeCheckoutModal();
+        btn.innerText = "Complete Payment";
+        btn.disabled = false;
+        showSection('orders');
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
